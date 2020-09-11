@@ -22,7 +22,8 @@ output.innerHTML = `
 function zzzOnClick() {
     let output = document.querySelector(".output");
     output.style.display = "block";
-    let hours = "";
+    let hours = document.querySelector("#hours");
+    hours.innerText = ""; // cleanup existing content
   
     // get current time
     let now = Date.now(); // in milliseconds
@@ -34,18 +35,18 @@ function zzzOnClick() {
   
     // calculate 6 sleep cycles (each 90 minutes)
     for(let i = 0; i < 6; i++) {
-      cycle += 90 * minute;
+        cycle += 90 * minute;
   
-      // append the sleep cycles to hours string
-      hours += new Date(cycle).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // append the sleep cycles to hours string
+        let span = document.createElement("span");
+        span.id = "cycle-" + (i + 1);
+        span.innerText = new Date(cycle).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        hours.appendChild(span);
   
       if (i < 5) {
-        hours += " OR ";
+        let or = document.createTextNode(" OR ");
+        hours.appendChild(or);
       }
     }
-  
-    // output hours
-    let hoursElm = document.querySelector("#hours");
-    hoursElm.innerText = hours;
   }
   
